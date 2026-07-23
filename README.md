@@ -1,46 +1,41 @@
-
-
 ## Overview
 
-This project is an offline AI companion prototype for the Sundae Doll. It combines a local Large Language Model (LLM) with Piper Text-to-Speech (TTS) to generate empathetic responses and convert them into speech without requiring an internet connection.
-
----
+This project is an offline AI companion prototype for the Sundae Doll. It integrates local Large Language Models (Llama 3.2 3B and Gemma 2B), offline speech recognition using Vosk, and Piper Text-to-Speech (TTS) to provide natural and empathetic voice interactions without requiring an internet connection.
 
 ## Features
 
-- Fully offline conversation
-- Local LLM using Gemma 2 (2B) via Ollama
-- Offline speech synthesis using Piper TTS
-- Generates empathetic responses
-- Converts responses into speech (.wav)
-
----
+- Fully offline AI companion
+- Supports Llama 3.2 3B and Gemma 2B via Ollama
+- Offline Speech-to-Text using Vosk
+- Offline Text-to-Speech using Piper
+- Automatic audio playback
+- Empathetic conversational responses
+- Safe handling of harmful requests
+- Automatic voice response generation
 
 ## Project Workflow
 
-```
-User Input
+Microphone
       ↓
-Gemma 2 (2B) - Ollama
+Vosk Speech Recognition
       ↓
-Empathetic Text Response
+Llama 3.2 3B / Gemma 2B
+      ↓
+Empathetic Response
       ↓
 Piper TTS
       ↓
-Speech Output (.wav)
-```
-
----
+Automatic Audio Playback
 
 ## Technologies Used
 
 - Python 3.11
 - Ollama
-- Gemma 2 (2B)
+- Llama 3.2 3B
+- Gemma 2B
 - Piper TTS
+- Vosk Speech Recognition
 - Hugging Face (Piper Voice Model)
-
----
 
 ## Requirements
 
@@ -48,8 +43,7 @@ Speech Output (.wav)
 - Ollama
 - Piper Voice Model
 - Windows/Linux
-
----
+- Vosk Speech Recognition Model
 
 ## Installation
 
@@ -86,8 +80,6 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
----
-
 ## Install Ollama
 
 Download and install Ollama from
@@ -98,9 +90,9 @@ Download the Gemma model
 
 ```bash
 ollama pull gemma2:2b
+ollama pull llama3.2:3b
+pip install ollama piper-tts vosk sounddevice playsound==1.2.2
 ```
-
----
 
 ## Download Piper Voice
 
@@ -111,7 +103,14 @@ Download the following files from the Hugging Face Piper Voices repository.
 
 Place both files inside the project folder.
 
----
+
+## Download Vosk 
+
+vosk-model-small-en-us-0.22
+
+Extract the folder and place it inside:
+
+C:\piper_voice\
 
 ## Running the Project
 
@@ -124,7 +123,8 @@ ollama serve
 Open another terminal
 
 ```bash
-python test.py
+python test_llama.py
+python test_gemma.py
 ```
 
 ---
@@ -147,27 +147,24 @@ I'm sorry you're feeling sad. I'm here with you. Tomorrow is a new day.
 A speech file will also be generated.
 
 ```
-sundae_offline_response_1.wav
+sundae_offline_gemma_1.wav
+sundae_offline_llama_1.wav
 ```
 
 ---
 
 ## Current Limitation
 
-- Piper voice sounds robotic.
-- It does not express emotions such as happiness, sadness, empathy, or concern.
-- Future work includes exploring emotional speech synthesis and fine-tuning Piper for more natural speech.
+- Piper voice sounds little robotic.
+- The prototype currently supports English only.
 
----
+
 
 ## Future Improvements
 
-- Emotional voice generation
-- Fine-tuned Piper models
-- Voice cloning
-- Microphone input (Speech-to-Text)
-- Real-time conversation
-- Emotion detection from user input
-
----
+- Better speech recognition
+- Higher quality emotional voices
+- Additional local LLM comparison
+- Conversation memory
+- Emotion-aware responses
 
