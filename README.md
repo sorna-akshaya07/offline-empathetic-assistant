@@ -33,6 +33,8 @@ Automatic Audio Playback
 - Ollama
 - Llama 3.2 3B
 - Gemma 2B
+- Qwen 2.5 3B
+- Phi3 mini
 - Piper TTS
 - Vosk Speech Recognition
 - Hugging Face (Piper Voice Model)
@@ -91,6 +93,8 @@ Download the Gemma model
 ```bash
 ollama pull gemma2:2b
 ollama pull llama3.2:3b
+ollama pull qwen2.5:3b
+ollama pull phi3:mini
 pip install ollama piper-tts vosk sounddevice playsound==1.2.2
 ```
 
@@ -128,6 +132,52 @@ python test_gemma.py
 ```
 
 ---
+## Local LLM Evaluation
+
+Four local Large Language Models were evaluated for the Sundae Doll offline assistant.
+
+- Llama 3.2 3B
+- Gemma 2B
+- Qwen 2.5 3B
+- Phi-3 Mini
+
+The models were compared using multiple real-world conversation scenarios, including greetings, emotional support, reassurance, factual questions, frustration, and unsafe requests.
+
+Evaluation criteria included:
+
+- Empathy
+- Persona consistency
+- Brevity
+- Relevance
+- Safety
+- Context handling
+- Response latency
+- Memory usage
+- TTS suitability
+
+## Evaluation Report
+
+A detailed performance evaluation is available in the following report:
+
+📄 **Local LLM Performance Comparison for Offline Empathetic Assistant.pdf**
+
+The report includes:
+
+- Testing across different conversation scenarios
+- Recorded observations
+- Quality and practical performance comparison
+- Final model selection and conclusion
+
+Please refer to **Local LLM Performance Comparison for Offline Empathetic Assistant.pdf** for the complete evaluation and supporting evidence.
+
+## Documentation
+
+The repository also contains project documentation, including:
+
+- Project Report (PDF)
+- Local LLM evaluation results
+- Conversation scenario testing
+- Performance comparison tables
 
 ## Example
 
@@ -164,7 +214,5 @@ sundae_offline_llama_1.wav
 
 - Better speech recognition
 - Higher quality emotional voices
-- Additional local LLM comparison
-- Conversation memory
-- Emotion-aware responses
+- Fine-tune Piper voices for more natural emotional speech
 
