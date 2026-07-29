@@ -129,6 +129,8 @@ Open another terminal
 ```bash
 python test_llama.py
 python test_gemma.py
+python test_qwen.py
+python test_phi.py
 ```
 
 ---
