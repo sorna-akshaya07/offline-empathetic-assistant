@@ -1,25 +1,28 @@
 ## Overview
 
-This project is an offline AI companion prototype for the Sundae Doll. It integrates local Large Language Models (Llama 3.2 3B and Gemma 2B), offline speech recognition using Vosk, and Piper Text-to-Speech (TTS) to provide natural and empathetic voice interactions without requiring an internet connection.
+This project is an offline AI companion prototype for the Sundae Doll. It integrates multiple local Large Language Models (Llama 3.2 3B, Gemma 2B, Qwen 2.5 3B, and Phi-3 Mini), offline speech recognition using Vosk, and Piper Text-to-Speech (TTS) to provide natural, empathetic, and safe voice interactions without requiring an internet connection.
 
 ## Features
 
 - Fully offline AI companion
-- Supports Llama 3.2 3B and Gemma 2B via Ollama
+- Supports Llama 3.2 3B, Gemma 2B, Qwen 2.5 3B, and Phi-3 Mini via Ollama
 - Offline Speech-to-Text using Vosk
 - Offline Text-to-Speech using Piper
 - Automatic audio playback
 - Empathetic conversational responses
-- Safe handling of harmful requests
+- Minimal session memory for follow-up conversations
+- Improved safety handling for harmful requests
+- Automatic latency measurement
 - Automatic voice response generation
 
-## Project Workflow
-
+## Work Flow
 Microphone
       ↓
 Vosk Speech Recognition
       ↓
-Llama 3.2 3B / Gemma 2B
+Local LLM (Llama / Gemma / Qwen / Phi)
+      ↓
+Safety Validation
       ↓
 Empathetic Response
       ↓
@@ -131,9 +134,23 @@ python test_llama.py
 python test_gemma.py
 python test_qwen.py
 python test_phi.py
+python offline_llms_runner.py
 ```
 
 ---
+## Output Files
+
+sundae_offline_gemma.wav 
+sundae_offline_llama.wav 
+sundae_offline_qwen.wav 
+sundae_offline_phi.wav 
+
+## Switching Between Local LLM Models
+
+The offline_llms_runner.py file is a common runner for all four local LLMs (Llama 3.2 3B, Gemma 2B, Qwen 2.5 3B, and Phi-3 Mini). The model can be switched by changing only the LOCAL_MODEL_NAME value in this file. The remaining conversation, safety, memory, and TTS logic remains unchanged.
+
+
+
 ## Local LLM Evaluation
 
 Four local Large Language Models were evaluated for the Sundae Doll offline assistant.
@@ -157,20 +174,38 @@ Evaluation criteria included:
 - Memory usage
 - TTS suitability
 
+## Recent Improvements
+
+### High Priority
+- Improved prompt engineering
+- Added minimal session memory
+- Improved safety handling
+
+### Medium Priority
+- Consolidated repeated logic
+- Replaced model-specific scripts
+- Added better response validation
+
+### Low Priority
+- Added realistic conversation testing
+- Extended prompt comparison
+- Expanded model comparison process
+
 ## Evaluation Report
 
-A detailed performance evaluation is available in the following report:
+The repository includes the following evaluation documents:
 
-📄 **Local LLM Performance Comparison for Offline Empathetic Assistant.pdf**
+- 📄 Local LLM Performance Comparison for Offline Empathetic Assistant.pdf
+- 📄 Piper Offline Empathetic Assistant Recordings.pdf
 
-The report includes:
+These documents include:
 
-- Testing across different conversation scenarios
-- Recorded observations
-- Quality and practical performance comparison
-- Final model selection and conclusion
-
-Please refer to **Local LLM Performance Comparison for Offline Empathetic Assistant.pdf** for the complete evaluation and supporting evidence.
+- 22 conversation scenario evaluations
+- Model-wise response comparisons
+- Latency measurements
+- Failure and degradation observations
+- Audio recording references
+- Final performance analysis
 
 ## Documentation
 
