@@ -279,6 +279,26 @@ User: I feel lonely today
 
 The request is passed to the local LLM and an empathetic response is generated.
 
+## Safety Event Logging
+
+The SafetyValidator automatically creates a `safety_events.log` file when an unsafe LLM response is detected.
+
+The log file records:
+
+- Date and time of the safety event
+- Type of safety event
+- Detected unsafe response
+
+Example:
+
+```text
+[2026-08-15 20:19:44] UNSAFE_RESPONSE: I cannot assist with harming yourself...
+```
+
+The `safety_events.log` file is generated automatically at runtime and is not required to be created manually.
+
+The log file is excluded from Git using `.gitignore`.
+
 ## Evaluation Documents
 
 The repository includes the following evaluation documents:
