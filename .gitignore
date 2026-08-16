@@ -1,0 +1,8 @@
+.venv/
+.env
+__pycache__/
+*.wav
+*.onnx
+*.onnx.json
+*.log
+vosk-model-*/
