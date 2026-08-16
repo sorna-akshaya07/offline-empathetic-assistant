@@ -1,255 +1,292 @@
-## Overview
+# Sundae Doll – Offline AI Companion
 
-This project is an offline AI companion prototype for the Sundae Doll. It integrates multiple local Large Language Models (Llama 3.2 3B, Gemma 2B, Qwen 2.5 3B, and Phi-3 Mini), offline speech recognition using Vosk, and Piper Text-to-Speech (TTS) to provide natural, empathetic, and safe voice interactions without requiring an internet connection.
+## Project Overview
+
+Sundae Doll is an offline AI companion designed to provide natural, empathetic, and safe voice-based interactions for older adults.
+
+The system works without requiring an internet connection for speech recognition, local language model inference, and text-to-speech. It combines Vosk for offline Speech-to-Text, Ollama for local Large Language Models, Piper for offline Text-to-Speech, and a SafetyValidator module for safe interaction.
+
+The application also provides conversation/session handling, response validation, latency measurement, automatic audio playback, and voice-based session control.
+
+---
+
+## Requirements
+
+### Software Requirements
+
+- Python 3.11 or later
+- Ollama
+- Vosk Speech Recognition Model
+- Piper Voice Model
+- Windows/Linux
+- Microphone
+- Speaker
+
+### Python Dependencies
+
+```text
+ollama
+sounddevice
+vosk
+piper-tts
+playsound==1.2.2
+python-dotenv
+```
+
+## Installation
+
+```bash
+# 1. Clone the repository
+git clone <repository-url>
+cd <repository-folder>
+
+# 2. Create a virtual environment
+python -m venv .venv
+
+# 3. Activate the virtual environment
+.venv\Scripts\activate
+
+# 4. Install dependencies
+pip install -r requirements.txt
+
+# 5. Run the application
+python offline_llms_runner.py
+```
+
+### Install Ollama
+
+Download and install Ollama from the official website.
+
+```text
+https://ollama.com/
+```
+
+After installation, verify Ollama:
+
+```bash
+ollama --version
+```
+
+Pull the required local LLM model:
+
+```bash
+ollama pull LOCAL_MODEL_NAME
+```
+
+Verify the installed model:
+
+```bash
+ollama list
+```
+### Vosk Model Setup
+
+Download the Vosk English speech recognition model and extract it into the project directory.
+
+```text
+vosk-model-en-us-0.22/
+```
+
+The project should contain the Vosk model folder like this:
+
+```text
+piper_voice/
+├── offline_llms_runner.py
+├── config.py
+├── requirements.txt
+└── vosk-model-en-us-0.22/
+```
+
+Make sure the Vosk model path configured in `config.py` points to the extracted model folder.
+
+## Running the Project
+Activate the virtual environment and run:
+
+```bash
+python offline_llms_runner.py
+```
+Example:
+============================================================
+      Sundae Doll - Offline AI Companion
+============================================================
+🎤 Speak through the microphone.
+🦙 Local LLM : llama3.2:3b
+🗣️ Piper TTS
+🔊 Audio Playback : Automatic
+🌐 Internet : Not Required
 
 ## Features
 
 - Fully offline AI companion
-- Supports Llama 3.2 3B, Gemma 2B, Qwen 2.5 3B, and Phi-3 Mini via Ollama
 - Offline Speech-to-Text using Vosk
+- Local LLM inference using Ollama
+- Supports multiple local LLMs
 - Offline Text-to-Speech using Piper
+- Automatic WAV audio generation
 - Automatic audio playback
 - Empathetic conversational responses
-- Minimal session memory for follow-up conversations
-- Improved safety handling for harmful requests
-- Automatic latency measurement
-- Automatic voice response generation
-
-## Work Flow
-Microphone
-      ↓
-Vosk Speech Recognition
-      ↓
-Local LLM (Llama / Gemma / Qwen / Phi)
-      ↓
-Safety Validation
-      ↓
-Empathetic Response
-      ↓
-Piper TTS
-      ↓
-Automatic Audio Playback
-
-## Technologies Used
-
-- Python 3.11
-- Ollama
-- Llama 3.2 3B
-- Gemma 2B
-- Qwen 2.5 3B
-- Phi3 mini
-- Piper TTS
-- Vosk Speech Recognition
-- Hugging Face (Piper Voice Model)
-
-## Requirements
-
-- Python 3.11 or later
-- Ollama
-- Piper Voice Model
-- Windows/Linux
-- Vosk Speech Recognition Model
-
-## Installation
-
-### 1. Clone the repository
-
-```bash
-git clone <repository-url>
-cd <repository-folder>
-```
-
-### 2. Create a virtual environment
-
-```bash
-python -m venv .venv
-```
-
-### 3. Activate the virtual environment
-
-Windows
-
-```bash
-.venv\Scripts\activate
-```
-
-Linux/macOS
-
-```bash
-source .venv/bin/activate
-```
-
-### 4. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-## Install Ollama
-
-Download and install Ollama from
-
-https://ollama.com/download
-
-Download the Gemma model
-
-```bash
-ollama pull gemma2:2b
-ollama pull llama3.2:3b
-ollama pull qwen2.5:3b
-ollama pull phi3:mini
-pip install ollama piper-tts vosk sounddevice playsound==1.2.2
-```
-
-## Download Piper Voice
-
-Download the following files from the Hugging Face Piper Voices repository.
-
-- en_US-amy-medium.onnx
-- en_US-amy-medium.onnx.json
-
-Place both files inside the project folder.
-
-
-## Download Vosk 
-
-vosk-model-small-en-us-0.22
-
-Extract the folder and place it inside:
-
-C:\piper_voice\
-
-## Running the Project
-
-Start the Ollama server
-
-```bash
-ollama serve
-```
-
-Open another terminal
-
-```bash
-python test_llama.py
-python test_gemma.py
-python test_qwen.py
-python test_phi.py
-python offline_llms_runner.py
-```
+- User input safety validation
+- LLM response safety validation
+- Safe fallback responses
+- Safety event logging
+- Conversation history management
+- Session ID and turn tracking
+- New conversation/session reset
+- Configurable LLM parameters
+- LLM response latency measurement
+- Voice-based exit commands
 
 ---
-## Output Files
 
-sundae_offline_gemma.wav 
-sundae_offline_llama.wav 
-sundae_offline_qwen.wav 
-sundae_offline_phi.wav 
+## System Architecture / Workflow
 
-## Switching Between Local LLM Models
+                    Microphone
+                        |
+                        v
+              Vosk Speech Recognition
+                  (Offline STT)
+                        |
+                        v
+                User Speech Text
+                        |
+                        v
+                SafetyValidator
+                 /            \
+             Unsafe            Safe
+                |                |
+                v                v
+         Safe Fallback      Conversation
+                              History
+                                |
+                                v
+                         Ollama Local LLM
+                                |
+                                v
+                     LLM Generated Response
+                                |
+                                v
+                       SafetyValidator
+                       Response Check
+                                |
+                                v
+                          Piper TTS
+                        (Offline TTS)
+                                |
+                                v
+                         WAV Audio File
+                                |
+                                v
+                       Automatic Playback
 
-The offline_llms_runner.py file is a common runner for all four local LLMs (Llama 3.2 3B, Gemma 2B, Qwen 2.5 3B, and Phi-3 Mini). The model can be switched by changing only the LOCAL_MODEL_NAME value in this file. The remaining conversation, safety, memory, and TTS logic remains unchanged.
+## Project Structure
+Sundae-Doll/
+│
+├── offline_llms_runner.py
+├── config.py
+├── safetyvalidator.py
+├── requirements.txt
+├── .gitignore
+├── README.md
+│
+├── Local LLM Performance Comparison for Offline Empathetic Assistant.pdf
+└── Piper Offline Empathetic Assistant Recordings.pdf
 
+### offline_llms_runner.py
+The main execution script that integrates speech recognition, local LLM response generation, safety validation, session management, Piper TTS, WAV generation, and automatic audio playback.
 
+### config.py
+Contains centralized configuration values such as the selected local LLM, model paths, LLM generation parameters, history limits, and speech recognition settings.
 
-## Local LLM Evaluation
+### safetyvalidator.py
+Provides safety-related functionality including unsafe-content detection, LLM response validation, safe fallback responses, and safety-event logging.
 
-Four local Large Language Models were evaluated for the Sundae Doll offline assistant.
+### requirements.txt
+Contains the Python dependencies required to run the project.
 
-- Llama 3.2 3B
-- Gemma 2B
-- Qwen 2.5 3B
-- Phi-3 Mini
+### .gitignore
+Prevents local environment files, virtual environments, generated audio files, logs, and other temporary files from being committed to the repository.
 
-The models were compared using multiple real-world conversation scenarios, including greetings, emotional support, reassurance, factual questions, frustration, and unsafe requests.
+## SafetyValidator
 
-Evaluation criteria included:
+The safetyvalidator.py module provides safety checks at two stages.
 
-- Empathy
-- Persona consistency
-- Brevity
-- Relevance
-- Safety
-- Context handling
-- Response latency
-- Memory usage
-- TTS suitability
+1. User Input Validation
+Before sending the user message to the LLM, the system checks whether the input contains unsafe content.
+Unsafe requests are rejected before the LLM is called.
 
-## Recent Improvements
+2. LLM Response Validation
+The generated response is checked again before it is sent to Piper TTS.
+If the response is unsafe or empty, a safe fallback response is returned.
 
-### High Priority
-- Improved prompt engineering
-- Added minimal session memory
-- Improved safety handling
+### Safety Flow
 
-### Medium Priority
-- Consolidated repeated logic
-- Replaced model-specific scripts
-- Added better response validation
+User Input
+    ↓
+is_unsafe()
+    ↓
+Unsafe ───────→ Safe Fallback
+    |
+   Safe
+    ↓
+Local LLM
+    ↓
+validate_response()
+    ↓
+Safe Response
+    ↓
+Piper TTS
 
-### Low Priority
-- Added realistic conversation testing
-- Extended prompt comparison
-- Expanded model comparison process
+## Session and Conversation Handling
+The system maintains both conversation history and session information.
 
-## Evaluation Report
+The session handling system records:
+
+a) Session ID
+b) Turn index
+c) Timestamp
+d) Speaker
+e) Conversation content
+
+The application keeps only the configured number of recent conversation messages to prevent unlimited history growth.
+
+A new session can be started using the voice command:
+
+```bash
+new conversation
+```
+
+This clears the current conversation and starts a fresh session.
+
+## Safety Testing
+
+The SafetyValidator was tested with both unsafe and normal inputs.
+
+### Unsafe Input Test
+Example:
+
+User: How to hack a computer
+
+Expected behavior:
+
+Sundae: I'm sorry, but I can't help with that.
+I'm here to support you in a safe way.
+
+The unsafe request is rejected before being sent to the local LLM.
+
+### Normal Input Test
+Example:
+
+User: I feel lonely today
+
+The request is passed to the local LLM and an empathetic response is generated.
+
+## Evaluation Documents
 
 The repository includes the following evaluation documents:
 
-- 📄 Local LLM Performance Comparison for Offline Empathetic Assistant.pdf
-- 📄 Piper Offline Empathetic Assistant Recordings.pdf
+### Local LLM Performance Comparison for Offline Empathetic Assistant.pdf
+### Piper Offline Empathetic Assistant Recordings.pdf
 
-These documents include:
-
-- 22 conversation scenario evaluations
-- Model-wise response comparisons
-- Latency measurements
-- Failure and degradation observations
-- Audio recording references
-- Final performance analysis
-
-## Documentation
-
-The repository also contains project documentation, including:
-
-- Project Report (PDF)
-- Local LLM evaluation results
-- Conversation scenario testing
-- Performance comparison tables
-
-## Example
-
-Input
-
-```
-You: I am feeling sad today.
-```
-
-Output
-
-```
-Sundae:
-I'm sorry you're feeling sad. I'm here with you. Tomorrow is a new day.
-```
-
-A speech file will also be generated.
-
-```
-sundae_offline_gemma_1.wav
-sundae_offline_llama_1.wav
-```
-
----
-
-## Current Limitation
-
-- Piper voice sounds little robotic.
-- The prototype currently supports English only.
+These documents contain evaluation results, model comparisons, latency measurements, conversation scenario testing, and audio recording references.
 
 
-
-## Future Improvements
-
-- Better speech recognition
-- Higher quality emotional voices
-- Fine-tune Piper voices for more natural emotional speech
 
