@@ -289,6 +289,7 @@ The log file records:
 - Type of safety event
 - Detected unsafe response
 
+
 Example:
 
 ```text
