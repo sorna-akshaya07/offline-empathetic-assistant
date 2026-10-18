@@ -1,8 +1,8 @@
-# Sundae Doll – Offline AI Companion
+#  Offline AI Companion
 
 ## Project Overview
 
-Sundae Doll is an offline AI companion designed to provide natural, empathetic, and safe voice-based interactions for older adults.
+This Doll is an offline AI companion designed to provide natural, empathetic, and safe voice-based interactions for older adults.
 
 The system works without requiring an internet connection for speech recognition, local language model inference, and text-to-speech. It combines Vosk for offline Speech-to-Text, Ollama for local Large Language Models, Piper for offline Text-to-Speech, and a SafetyValidator module for safe interaction.
 
